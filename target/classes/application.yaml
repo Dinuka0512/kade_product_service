@@ -4,10 +4,13 @@ server:
 spring:
   application:
     name: product_service
+  jackson:
+    date-format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+    time-zone: "UTC"
   datasource:
-    url: jdbc:postgresql://localhost:5432/kade_products
-    username: kade
-    password: kade
+    url: "jdbc:postgresql://localhost:5432/kade_products"
+    username: postgres
+    password: "1212"
   jpa:
     hibernate:
       ddl-auto: update

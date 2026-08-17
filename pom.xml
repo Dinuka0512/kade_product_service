@@ -14,7 +14,7 @@
     <name>product_service</name>
     <description>Products and vendors catalog for the Kade marketplace</description>
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
         <spring-cloud.version>2025.1.2</spring-cloud.version>
     </properties>
     <dependencies>
