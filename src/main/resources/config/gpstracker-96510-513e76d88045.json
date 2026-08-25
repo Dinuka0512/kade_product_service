@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "gpstracker-96510",
+  "private_key_id": "513e76d880453906eb46d06680cf962dedd655a5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDDecDySNPfM82q\nWHcmUnDdKLT+peRKCBBZmhVwG0iI7c3dCSGf8+V9n7E14z1SnTitf9tQnkzvachK\nZPxIGeyqkRLn8dX54Q2JrTxv6uyzV4q031L88ckG7gQCCl7CWmlUP2cSYI5EGjT5\nm6L3Mx06dXy96JazNbQ4k5QC3EvSGwyspazFLkSDYucGrFWovZOioqkeANemjjcO\n6NbKPZV/5DiKEsSG1zg7baKf8nFFM0LHA4C7GIQ8HVuWJ3/y1OGOsRpBl9z5GNlb\nr7r9WQEMq9LSkodz/jlOPrztUtDwt9JvY0aFUVfjAFrKpUPiLvKwKX7A+WlK6yO4\nhds8UJ0DAgMBAAECggEAMZcHve9/4JYRzO9Yet5bR5/2GswXGDjnfPO8EI67XhGG\nMlcIsr17MN18ZYFao0TDhjBzgQZH2kzpxQXNgrUg9zyKoVEWyaeweYb7WCEvH2hM\nBgrJ0OW97AYh+iqLU58ALaFQErdwIBLN8azsMO5EsfnwRXVmFdy/9cJqwDcG/Svx\ntjyRlfZEUYqC9skMNtspU701tS9OcBHaHKxsYJSp+C7n+aexotQQSuN0cVFckty0\nNoWPES0771eDr5CHaqgN+aBLMbszM3228aaTbeeZV/S1xiHptb4eZthCpTXOM7dj\ndCGW04PdHv36qqtUfwqNBA2ghnutDkdQbGSMp3r4UQKBgQDyDo9bpC9XMT3om5qE\n/FGgg13QChYlMHqEw9Ybm3dJH+hARiwxud28C6BwLfTz+M6QEI7lsirhAee3/t0t\ndCUxobZio2RWAyyFsk5PmmgX6XaTBrwrVL8eD0rzlRwcbBrTFkXrlPyCQbvYj/3v\nxRX9WqeFTqiCShgh6V1qWfPXLwKBgQDOvEr6taVumhG1UkeBp5ixNOjfE6ehkHbC\n+eORURB5sT045UW15itq5V+jY9PTRmZAiUhUGjMgB/264uOa9+dyjk+bWP+ffmSi\n/+waqj8sN1jiIp90XPZtfCHNYwvwk26aGeBN9QBqS7OnU8hSsP2MvpIiCGiPZElv\nMrQkc0JibQKBgHyRj6dKvG4z0jdl9MRhkaR4Vowc1L64zySKICK/BElmmUCSnGXO\n0FTY6u0wSXJQ5gTv8Io3AaggMd7X031z2zxKi7EBgz5cjcoUNAb1YIKFzFbnzWjD\nSUOv/ROT9g6Od9OQD9WoK7bhG0nc+IMvOxzSTYnmLAQ5G2hAT6nOtxVTAoGBAKFi\n+oF3Nhr+aV6MScgcZqXHsRccR9tnZF7XJuC1UNA/HZUB3oaelTxQrXVmo+El7wLo\naK9G+KxDsL6pCpdaebLDB8A1HPCMgdGBSfaS+tfwqRF3h9UWEUXtBpJIhPSck1X3\nZ1RUM6vHRwsT66kqA/VQe9HXkJCH8I+/HEPsOmGNAoGBAKi+UbAy8JtW52Czs812\nvNJjasDgk6i0Q9MZkRyHSRNwMGL5Zp9H3jkXRFIuEOa7JflI9jV32n0S/J6QCS2J\nU4xAcMkYBkbsrUPatBqizQ7QXyN2eihDQhtp52fhWJRAjYkh0WJiZHYzUx6d7gZf\n3GzEoro7ay6+nH8K5r6OT4mE\n-----END PRIVATE KEY-----\n",
+  "client_email": "kade-backend-storage@gpstracker-96510.iam.gserviceaccount.com",
+  "client_id": "105899627523560657516",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kade-backend-storage%40gpstracker-96510.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

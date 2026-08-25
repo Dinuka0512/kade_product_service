@@ -1,0 +1,6 @@
+# Environment variables
+.env
+.env.*
+
+# GCP credentials
+config/gpstracker-96510-513e76d88045.json

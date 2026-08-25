@@ -1,14 +1,14 @@
 package com.dinuka.dev.product_service.service;
 
-import com.dinuka.dev.product_service.dto.ProductInput;
-import com.dinuka.dev.product_service.model.Category;
 import com.dinuka.dev.product_service.model.Product;
-import com.dinuka.dev.product_service.model.Vendor;
 import com.dinuka.dev.product_service.repository.CategoryRepository;
 import com.dinuka.dev.product_service.repository.ProductRepository;
 import com.dinuka.dev.product_service.repository.VendorRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,11 +17,14 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final VendorRepository vendorRepository;
+    private final GcpStorageService gcpStorageService;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, VendorRepository vendorRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, 
+                          VendorRepository vendorRepository, GcpStorageService gcpStorageService) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.vendorRepository = vendorRepository;
+        this.gcpStorageService = gcpStorageService;
     }
 
     public List<Product> search(String q, Long categoryId, Long vendorId, Boolean featured, String sort) {
@@ -79,30 +82,48 @@ public class ProductService {
         }
     }
 
-    public Product create(ProductInput input, Long vendorId) {
-        String slug = input.getName().toLowerCase()
+    public Product create(String name, Double price, Double compareAtPrice, String shortDescription,
+                          String longDescription, Long categoryId, Integer stock, String tags,
+                          List<MultipartFile> images, Long vendorId) {
+        String slug = name.toLowerCase()
                 .replaceAll("[^a-z0-9]+", "-")
                 .replaceAll("(^-|-$)", "");
 
         Product product = new Product();
-        product.setName(input.getName());
+        product.setName(name);
         product.setSlug(slug);
-        product.setShortDescription(input.getShortDescription());
-        product.setLongDescription(input.getLongDescription() != null ? input.getLongDescription() : "");
-        product.setPrice(input.getPrice());
-        product.setCompareAtPrice(input.getCompareAtPrice());
-        product.setCategoryId(input.getCategoryId());
+        product.setShortDescription(shortDescription);
+        product.setLongDescription(longDescription != null ? longDescription : "");
+        product.setPrice(price);
+        product.setCompareAtPrice(compareAtPrice);
+        product.setCategoryId(categoryId);
         product.setVendorId(vendorId);
-        product.setStock(input.getStock() != null ? input.getStock() : 0);
+        product.setStock(stock != null ? stock : 0);
 
-        if (input.getImages() != null && !input.getImages().isEmpty()) {
-            product.setImagesRaw(String.join(",", input.getImages()));
+        // Upload images to GCP Storage
+        if (images != null && !images.isEmpty()) {
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    try {
+                        String imageUrl = gcpStorageService.uploadFile(image);
+                        imageUrls.add(imageUrl);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to upload image to GCP Storage", e);
+                    }
+                }
+            }
+            if (!imageUrls.isEmpty()) {
+                product.setImagesRaw(String.join(",", imageUrls));
+            } else {
+                product.setImagesRaw("https://picsum.photos/seed/" + slug + "/800/800");
+            }
         } else {
             product.setImagesRaw("https://picsum.photos/seed/" + slug + "/800/800");
         }
 
-        if (input.getTags() != null) {
-            product.setTagsRaw(String.join(",", input.getTags()));
+        if (tags != null && !tags.isBlank()) {
+            product.setTagsRaw(tags);
         }
 
         Product saved = productRepository.save(product);
@@ -110,28 +131,45 @@ public class ProductService {
         return saved;
     }
 
-    public Product update(Long id, ProductInput input) {
+    public Product update(Long id, String name, Double price, Double compareAtPrice, String shortDescription,
+                          String longDescription, Long categoryId, Integer stock, String tags,
+                          List<MultipartFile> images, Long vendorId) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        String slug = input.getName().toLowerCase()
+        String slug = name.toLowerCase()
                 .replaceAll("[^a-z0-9]+", "-")
                 .replaceAll("(^-|-$)", "");
 
-        product.setName(input.getName());
+        product.setName(name);
         product.setSlug(slug);
-        product.setShortDescription(input.getShortDescription());
-        if (input.getLongDescription() != null) product.setLongDescription(input.getLongDescription());
-        product.setPrice(input.getPrice());
-        product.setCompareAtPrice(input.getCompareAtPrice());
-        product.setCategoryId(input.getCategoryId());
-        if (input.getStock() != null) product.setStock(input.getStock());
+        product.setShortDescription(shortDescription);
+        if (longDescription != null) product.setLongDescription(longDescription);
+        product.setPrice(price);
+        product.setCompareAtPrice(compareAtPrice);
+        product.setCategoryId(categoryId);
+        if (stock != null) product.setStock(stock);
+        if (vendorId != null) product.setVendorId(vendorId);
 
-        if (input.getImages() != null && !input.getImages().isEmpty()) {
-            product.setImagesRaw(String.join(",", input.getImages()));
+        // Upload new images to GCP Storage if provided
+        if (images != null && !images.isEmpty()) {
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    try {
+                        String imageUrl = gcpStorageService.uploadFile(image);
+                        imageUrls.add(imageUrl);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to upload image to GCP Storage", e);
+                    }
+                }
+            }
+            if (!imageUrls.isEmpty()) {
+                product.setImagesRaw(String.join(",", imageUrls));
+            }
         }
 
-        if (input.getTags() != null) {
-            product.setTagsRaw(String.join(",", input.getTags()));
+        if (tags != null && !tags.isBlank()) {
+            product.setTagsRaw(tags);
         }
 
         Product saved = productRepository.save(product);
