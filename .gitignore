@@ -4,3 +4,6 @@
 
 # GCP credentials
 config/gpstracker-96510-513e76d88045.json
+
+target/
+*.json
